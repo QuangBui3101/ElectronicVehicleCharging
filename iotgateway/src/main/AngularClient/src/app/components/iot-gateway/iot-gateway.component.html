@@ -1,0 +1,138 @@
+<div>
+  <br />
+  <label>Current time:&nbsp;</label>
+  <label>
+    {{ this.hour | number: "2.0-0" }}:{{ this.minute | number: "2.0-0" }}
+  </label>
+  <label *ngIf="showSecond">:{{ this.second | number: "2.0-0" }}</label>
+  <button (click)="onClick()">Toggle Second</button><br />
+  <input
+    type="checkbox"
+    id="changeTime"
+    [(ngModel)]="changeCurrentTime"
+    (click)="getTime()"
+  />
+  <label for="changeTime">Set Current Time</label>
+  <br />
+  <div *ngIf="changeCurrentTime">
+    <label>Time:&nbsp;</label>
+    <input
+      type="text"
+      pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}"
+      [(ngModel)]="time"
+    />
+    <br />
+    <button (click)="changeTime()">Change time</button>
+    <p>Status: {{ this.status }}</p>
+  </div>
+  <input
+    type="checkbox"
+    id="scheduleCharge"
+    [(ngModel)]="changeSchedule"
+    (click)="getSchedule()"
+  />
+
+  <label for="scheduleCharge">Set Schedule</label>
+  <br />
+  <div *ngIf="changeSchedule">
+    <label>Start:&nbsp;</label>
+    <input
+      type="text"
+      pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}"
+      [(ngModel)]="startTime"
+    />
+    <br />
+    <label>Stop:&nbsp;</label>
+    <input
+      type="text"
+      pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}"
+      [(ngModel)]="stopTime"
+    />
+    <br />
+    <button (click)="setSchedule()">Set schedule</button>
+    <p>Status: {{ this.setScheduleStatus }}</p>
+  </div>
+  <label for="ToggleSchedule">Use schedule charging&nbsp;</label>
+  <label class="switch">
+    <input
+      type="checkbox"
+      id="ToggleSchedule"
+      [checked]="useStartStopChargeTime"
+      (change)="toggleUseSchedule()"
+    />
+    <span class="slider round"></span>
+  </label>
+  <br />
+  <div>
+    <label>Set battery limit percentage:&nbsp;</label>
+    <input
+      type="range"
+      name="points"
+      min="0"
+      max="100"
+      [ngModel]="this.batteryLimitPercentage"
+      (ngModelChange)="updateBatLimitPercent($event)"
+      [attr.disabled]="this.setBatteryLimitPercentage ? '' : null"
+    /><label>&nbsp;{{ this.batteryLimitPercentage }}&nbsp;%</label>
+  </div>
+  <label for="LimitBatteryPercentage">Limit Battery Percentage&nbsp;</label>
+  <label class="switch">
+    <input
+      type="checkbox"
+      id="LimitBatteryPercentage"
+      [checked]="this.setBatteryLimitPercentage"
+      (change)="setBatLimitPercent()"
+    />
+    <span class="slider round"></span> </label
+  ><br /><br />
+  <label for="ToggleCharger"
+    >{{
+      this.chargeState ? "Turn off charger" : "Turn on charger"
+    }}&nbsp;</label
+  >
+  <label class="switch">
+    <input
+      type="checkbox"
+      id="ToggleCharger"
+      [checked]="chargeState"
+      (change)="toggleCharger()"
+      [attr.disabled]="this.disableChargerState ? '' : null"
+    />
+    <span class="slider round"></span> </label
+  ><br /><br />
+  <label
+    >Battery percentage: {{ this.batteryPercentage | number: "1.2-2" }}%</label
+  ><br />
+  <label
+    >Power Consumption of Charger:
+    {{
+      (this.chargeState ? this.chargerPowerConsumption : 0) | number: "1.2-2"
+    }}</label
+  ><br />
+  <label
+    >Total Power Consumption:
+    {{ this.powerConsumption | number: "1.2-2" }}</label
+  ><br /><br />
+  <label for="ToggleCharger"
+    >{{
+      this.washingMachineState
+        ? "Turn off washing machine"
+        : "Turn on washing machine"
+    }}&nbsp;</label
+  >
+  <label class="switch">
+    <input
+      type="checkbox"
+      id="ToggleCharger"
+      [checked]="washingMachineState"
+      (change)="toggleWashingMachine()"
+    />
+    <span class="slider round"></span> </label
+  ><br />
+  <button (click)="emptyBattery()">Empty Battery</button><br />
+  <button (click)="onReload()">Reload Page</button>
+
+  <!-- <button (click)="">Toggle Charger</button><br /> -->
+  <!-- <button (click)="getData()">Get Data</button> -->
+  <!-- <pre>{{ this.dataString }}</pre> -->
+</div>
